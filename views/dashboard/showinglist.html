@@ -1,0 +1,107 @@
+<div>
+    <snap-drawer class="bg-dark">
+        <div class=snap-menu>
+            <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
+            <ul class=snap-ul>
+                <li ng-class="{active: $state.includes('home')}"><a ui-sref=home>HOME</a></li>
+                <li ng-class="{active: $state.includes('filmlist')}"><a ui-sref=filmlist>Danh sách phim</a></li>
+                <li ng-class="{active: $state.includes('showinglist')}"><a ui-sref=showinglist>Danh sách suất chiếu</a></li>
+                <li ng-class="{active: $state.includes('ticketpricelist')}"><a ui-sref=ticketpricelist>Danh sách giá vé</a></li>
+                <li ng-class="{active: $state.includes('theaterlist')"><a ui-sref="theaterlist">Rạp chiếu phim</a></li>
+                <li><a ui-sref=login>Đăng xuất</a></li>
+            </ul>
+        </div>
+    </snap-drawer>
+    <snap-dragger></snap-dragger>
+    <snap-content snap-opt-tap-to-close=false class=bg-dark>
+        <a snap-toggle=left ng-click="menuOpen = !menuOpen"> <span class=menutoggle> <i ng-hide=menuOpen class="fa fa-bars fa-2x"></i> <i ng-show=menuOpen class="fa fa-times fa-2x"></i> </span> </a>
+        <div class=fr>
+            <h2>Danh sách suất chiếu</h2>
+        </div>
+        <div class="container row condition">
+            <div class="row col-xs-6 col-sm-2">
+                <h5>Chọn rạp:</h5>
+                <select class="option" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
+                    <option disabled selected value>
+                        <h1>Chọn rạp</h1>
+                    </option>
+                </select>
+            </div>
+            <div class="col-xs-6 col-sm-2">
+                <h5>Chọn phim:</h5>
+                <select style="width: 150px !important;" ng-options="item in films" ng-model="film" ng-click="#">
+                    <option disabled selected value>
+                        <h1>Chọn phim</h1>
+                    </option>
+                </select>
+            </div>
+            <div class="col-xs-6 col-sm-2">
+                <h5>Chọn ngày:</h5>
+                <select ng-options="item in dates" ng-model="date" ng-click="#">
+                    <option disabled selected value>
+                        <h1>Chọn ngày</h1>
+                    </option>
+                </select>
+            </div>
+            <div class="col-xs-6 col-sm-2">
+                <h5>Version:</h5>
+                <select ng-options="item in version" ng-model="version" ng-click="#">
+                    <option disabled selected value>
+                        <h1>Chọn version</h1>
+                    </option>
+                </select>
+            </div>
+            <div class="col-xs-6 col-sm-2 findbtn">
+                <a class="btn btn-default">Duyệt</a>
+            </div>
+        </div>
+        <div class="container showingtable">
+            <h2>Danh sách các suất chiếu</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Rạp</th>
+                        <th>Phim</th>
+                        <th>Ngày chiếu</th>
+                        <th>Giờ chiếu</th>
+                        <th>Version</th>
+                        <th>Giá vé</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="x in showinglist">
+                        <td>{{x.theater}}</td>
+                        <td>{{x.film}}</td>
+                        <td>{{x.date}}</td>
+                        <td>{{x.start_time}}</td>
+                        <td>{{x.version}}</td>
+                        <td>{{x.price}}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                    <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a data-toggle="modal" data-target="#editshowingModal">Edit</a></li>
+                                    <li><a href="#">Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <a class="btn btn-default" data-toggle="modal" data-target="#addshowingModal">ADD</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+</div>
+</snap-content>
+</div>

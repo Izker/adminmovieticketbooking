@@ -1,0 +1,14 @@
+.formatbutton{
+	height: 60px;
+	width: 300px !important;
+	background-color: transparent; !important;
+	border: none !important;
+	color: #E6EE9C;
+}
+
+.formatbutton h1{
+	font-size: 25px !important;
+	font-style: italic !important;
+	font-family: Arial, Helvetica, sans-serif !important;
+	margin-bottom: 15px !important;
+}

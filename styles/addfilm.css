@@ -1,0 +1,42 @@
+.textbox {
+    width: 200px;
+    margin-left: 30px;
+    border-radius: 7px;
+    text-align: center;
+    height: 40px;
+}
+
+.format{
+	margin-top: 10px !important;
+	padding: 20px !important;
+}
+
+.radiobtn{
+	margin-left: 20px !important;
+}
+
+.bigtextbox {
+	width: 200px;
+    margin-left: 30px;
+    border-radius: 7px;
+    text-align: top;
+    height: 80px;
+}
+
+.modal2 {
+    width: 700px !important;
+}
+
+.textbox2 {
+    width: auto;
+    margin-left: 20px;
+    border-radius: 7px;
+    text-align: center;
+    height: auto;
+
+}
+
+.editfooter{
+    margin-top: 50px !important;
+    margin-left: 500px !important;
+}

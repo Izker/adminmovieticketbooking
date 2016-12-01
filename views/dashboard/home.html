@@ -1,0 +1,42 @@
+<div>
+    <snap-drawer class="bg-dark">
+        <div class=snap-menu>
+            <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
+            <ul class=snap-ul>
+                <li ng-class="{active: $state.includes('home')}"><a ui-sref=home>HOME</a></li>
+                <li ng-class="{active: $state.includes('filmlist')}"><a ui-sref=filmlist>Danh sách phim</a></li>
+                <li ng-class="{active: $state.includes('showinglist')}"><a ui-sref=showinglist>Danh sách suất chiếu</a></li>
+                <li ng-class="{active: $state.includes('ticketpricelist')}"><a ui-sref=ticketpricelist>Danh sách giá vé</a></li>
+                <li ng-class="{active: $state.includes('theaterlist')"><a ui-sref="theaterlist">Rạp chiếu phim</a></li>
+                <li><a ui-sref=login>Đăng xuất</a></li>
+            </ul>
+        </div>
+    </snap-drawer>
+    <snap-dragger></snap-dragger>
+    <snap-content snap-opt-tap-to-close=false class=bg-dark>
+        <a snap-toggle=left ng-click="menuOpen = !menuOpen"> <span class=menutoggle> <i ng-hide=menuOpen class="fa fa-bars fa-2x"></i> <i ng-show=menuOpen class="fa fa-times fa-2x"></i> </span> </a>
+
+        <div class=fr>
+            <h2>Home</h2> 
+        </div>
+
+        <div class=jumbotron>
+            <div class=container>
+                
+                <div class="row buttonlist">
+                    <div class="col-xs-6 col-sm-4">
+                        <a class="btn btn-danger formatbutton"><h1>Danh sách phim</h1></a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4">
+                        <a class="btn btn-danger formatbutton"><h1>Danh sách suất chiếu</h1></a>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4">
+                        <a class="btn btn-danger formatbutton"><h1>Danh sách giá vé</h1></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </snap-content>
+</div>
