@@ -2,3 +2,11 @@
 	margin-left: 475px !important; 
 	margin-top: 50px !important;
 }
+
+.province{
+	margin-left: 250px !important;
+	width: 900px;
+	height: 150px;
+	background-color: #BDBDBD;
+	border-radius: 25px;
+}

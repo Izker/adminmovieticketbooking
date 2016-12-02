@@ -47,9 +47,10 @@ app.config(["$stateProvider", "$urlRouterProvider", function(r, t) {
                 templateUrl: "views/dashboard/editfilm.html"
             })
             .state("theaterlist", {
-                url: "/theaterlits",
+                url: "/theaterlist",
                 parent:"dashboard",
-                templateUrl: "views/dashboard/theaterlist.html"
+                templateUrl: "views/dashboard/theaterlist.html",
+                controller: "theaterlistctrler"
             })
     }]),
 

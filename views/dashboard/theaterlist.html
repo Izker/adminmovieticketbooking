@@ -7,7 +7,7 @@
                 <li ng-class="{active: $state.includes('filmlist')}"><a ui-sref=filmlist>Danh sách phim</a></li>
                 <li ng-class="{active: $state.includes('showinglist')}"><a ui-sref=showinglist>Danh sách suất chiếu</a></li>
                 <li ng-class="{active: $state.includes('ticketpricelist')}"><a ui-sref="ticketpricelist">Danh sách giá vé</a></li>
-                <li ng-class="{active: $state.includes('theaterlist')"><a ui-sref="theaterlist">Rạp chiếu phim</a></li>
+                <li ng-class="{active: $state.includes('theaterlist')}"><a ui-sref="theaterlist">Rạp chiếu phim</a></li>
                 <li><a ui-sref=login>Đăng xuất</a></li>
             </ul>
         </div>
@@ -19,16 +19,15 @@
             <h2>Rạp</h2>
         </div>
         <div class="container">
-            <h2 class="title">Rạp chiếu phim</h2>
+            <h1 class="title">Rạp chiếu phim</h1>
         </div>
         <hr style="width: 600px;">
-        <ul>
-            <li><a>Hà Nội</a></li>
-            <li><a>Hồ Chí Minh</a></li>
-            <li><a>Vũng Tàu</a></li>
-            <li><a>Đà Nẵng</a></li>
-            
-        </ul>
+        <div class="province">
+            <ul>
+                <li ng-repeat="x in provinces" class="btn col-md-4">
+                    <h4>{{x.name}}</h4></li>
+            </ul>
+        </div>
 </div>
 </snap-content>
 </div>
