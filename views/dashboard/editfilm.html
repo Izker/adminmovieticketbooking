@@ -1,4 +1,4 @@
-<div>
+<div ng-init="init()">
     <snap-drawer class=bg-dark>
         <div class=snap-menu>
             <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="format">
                     <label for="end_date" class="col-xs-6">Ngày kết thúc: </label>
-                    <input id="start_date" type="date" class="textbox col-xs-6 inputformat">
+                    <input id="end_date" type="date" class="textbox col-xs-6 inputformat">
                 </div>
                 <div class="format">
                     <label for="type" class="col-xs-6">Thể loại: </label>
@@ -39,11 +39,11 @@
                 </div>
                 <div class="format">
                     <label for="actor" class="col-xs-6">Diễn viên: </label>
-                    <textarea id="description" class="bigtextbox col-xs-6 inputformat"></textarea>
+                    <textarea id="actor" class="bigtextbox col-xs-6 inputformat"></textarea>
                 </div>
                 <div class="format">
                     <label for="director" class="col-xs-6">Đạo diễn: </label>
-                    <textarea id="description" class="bigtextbox col-xs-6 inputformat"></textarea>
+                    <textarea id="director" class="bigtextbox col-xs-6 inputformat"></textarea>
                 </div>
                 <div class="format">
                     <label for="duration" class="col-xs-6">Thời lượng: </label>

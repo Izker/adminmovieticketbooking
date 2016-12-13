@@ -1,65 +1,211 @@
 "use strict";
 var app = angular.module("yapp", ["ui.router", "snap", "ngAnimate"]);
-app.config(["$stateProvider", "$urlRouterProvider", function(r, t) {
-        t.when("/dashboard", "/dashboard/overview"), t.otherwise("/login"), r.state("base", {
-                "abstract": !0,
-                url: "",
-                templateUrl: "views/base.html"
-            })
-            .state("login", {
-                url: "/login",
-                parent: "base",
-                templateUrl: "views/login.html",
-                controller: "LoginCtrl"
-            })
-            .state("dashboard", {
-                url: "/dashboard",
-                parent: "base",
-                templateUrl: "views/dashboard.html",
-                controller: "DashboardCtrl"
-            })
-            .state("home", {
-                url: "/overview",
-                parent: "dashboard",
-                templateUrl: "views/dashboard/home.html"
-            })
-            .state("filmlist", {
-                url: "/filmlist",
-                parent: "dashboard",
-                templateUrl: "views/dashboard/filmlist.html",
-                controller: "filmlistctrler"
-            })
-            .state("showinglist", {
-                url: "/showinglist",
-                parent: "dashboard",
-                templateUrl: "views/dashboard/showinglist.html",
-                controller: "showinglistctrler"
-            })
-            .state("ticketpricelist", {
-                url: "/ticketpricelist",
-                parent: "dashboard",
-                templateUrl: "views/dashboard/ticketpricelist.html",
-                controller: "ticketpricelistctrler"
-            })
-            .state("editfilm", {
-                url: "/editfilm", 
-                parent: "dashboard",
-                templateUrl: "views/dashboard/editfilm.html"
-            })
-            .state("theaterlist", {
-                url: "/theaterlist",
-                parent:"dashboard",
-                templateUrl: "views/dashboard/theaterlist.html",
-                controller: "theaterlistctrler"
-            })
-    }]),
+app.factory('AuthenticationService', function() {
+    var auth = {
+        isLogged: false
+    }
 
-    app.controller("LoginCtrl", ["$scope", "$location", function(r, t) {
-        r.submit = function() {
-            return t.path("/dashboard"), !1
+    return auth;
+});
+app.factory('UserService', function($http) {
+    return {
+        logIn: function(username, password) {
+            return $.ajax({
+                url: _url_host + '/v1/admin/users',
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    'username': username,
+                    'password': password
+                },
+            });
+        },
+
+        logOut: function() {
+
         }
-    }]), 
-    
-    app.controller("DashboardCtrl", ["$scope", "$state", function(r, t) {
-        r.$state = t
-    }]);
+    }
+});
+
+app.config(['$httpProvider', function($httpProvider) {
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+}]);
+
+angular.module("yapp").run(function($rootScope, $state, $http, $window, AuthenticationService) {
+    $http.defaults.headers.common.Authorization = $window.sessionStorage.token;;
+
+    $rootScope.$on("$stateChangeStart", function(event, nextRoute, currentRoute) {
+        if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
+            event.preventDefault();
+            $state.go("login");
+        }
+    });
+});
+
+app.config(["$stateProvider", "$urlRouterProvider", function(r, t) {
+    t.when("/dashboard", "/dashboard/overview"), t.otherwise("/login"), r.state("base", {
+            "abstract": !0,
+            url: "",
+            templateUrl: "views/base.html",
+            access: { requiredLogin: true }
+        })
+        .state("login", {
+            url: "/login",
+            parent: "base",
+            templateUrl: "views/login.html",
+            controller: "LoginCtrl",
+            access: { requiredLogin: false }
+        })
+        .state("dashboard", {
+            url: "/dashboard",
+            parent: "base",
+            templateUrl: "views/dashboard.html",
+            controller: "DashboardCtrl",
+            access: { requiredLogin: true }
+        })
+        .state("home", {
+            url: "/overview",
+            parent: "dashboard",
+            templateUrl: "views/dashboard/home.html",
+            controller: "homectrler",
+            access: { requiredLogin: true }
+        })
+        .state("filmlist", {
+            url: "/filmlist",
+            parent: "dashboard",
+            templateUrl: "views/dashboard/filmlist.html",
+            controller: "filmlistctrler",
+            access: { requiredLogin: false }
+        })
+        .state("showinglist", {
+            url: "/showinglist",
+            parent: "dashboard",
+            templateUrl: "views/dashboard/showinglist.html",
+            controller: "showinglistctrler",
+            access: { requiredLogin: true }
+        })
+        .state("ticketpricelist", {
+            url: "/ticketpricelist",
+            parent: "dashboard",
+            templateUrl: "views/dashboard/ticketpricelist.html",
+            controller: "ticketpricelistctrler",
+            access: { requiredLogin: true }
+        })
+        .state("editfilm", {
+            url: "/editfilm",
+            parent: "dashboard",
+            templateUrl: "views/dashboard/editfilm.html",
+            controller: "editfilmctrler",
+            access: { requiredLogin: false }
+        })
+        .state("theaterlist", {
+            url: "/theaterlist",
+            parent: "dashboard",
+            templateUrl: "views/dashboard/theaterlist.html",
+            controller: "theaterlistctrler",
+            access: { requiredLogin: true }
+        })
+}]);
+
+app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state', 'UserService', 'AuthenticationService', function($rootScope, $scope, $http, $window,
+    $state, UserService, AuthenticationService) {
+
+
+    $scope.isLogin = true;
+    if (AuthenticationService.isLogged) {
+        AuthenticationService.isLogged = false;
+        delete $window.sessionStorage.token;
+        $state.go("login");
+    }
+
+    $scope.login = function() {
+        $scope.isLogin = false;
+        var username = $scope.loginName;
+        var password = $scope.loginPassword;
+        if (username !== undefined && password !== undefined) {
+
+            UserService.logIn(username, password).done(function(data) {
+                AuthenticationService.isLogged = true;
+                $window.sessionStorage.token = data.token;
+                $http.defaults.headers.common.Authorization = 'JWT ' + data.token;
+
+                $.ajax({
+                    url: _url_host + '/v1/admin/films',
+                    datatype: 'json',
+                    data: {
+                        token: data.token
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data, status) {
+
+                        var filmlist = data.data;
+                        console.log(filmlist);
+                        $rootScope.filmlist1 = [];
+                        $rootScope.filmlist2 = [];
+                        for (var x in filmlist) {
+                            if (filmlist[x].isNowShowing === true) {
+                                $rootScope.filmlist1.push(filmlist[x]);
+                            } else {
+                                $rootScope.filmlist2.push(filmlist[x]);
+                            }
+                        }
+                    },
+                    error: function(data, status) {
+                        console.log(data);
+                    }
+                });
+
+                $state.go("home");
+            }).fail(function(status, data) {
+                console.log(status);
+                console.log(data);
+            });
+        }
+
+
+    }
+
+    $scope.logout = function logout() {
+        if (AuthenticationService.isLogged) {
+            AuthenticationService.isLogged = false;
+            delete $window.sessionStorage.token;
+            $state.go("login");
+        }
+    }
+
+    $scope.register = function() {
+        if ($scope.regConPass === $scope.regPass) {
+            $.ajax({
+                url: _url_host + 'api/v1/register',
+                type: 'POST',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    'username': $scope.regName,
+                    'password': $scope.regPass
+                },
+                success: function(data, textStatus) {
+                    console.log(textStatus);
+                    if (data.success != "false") {
+                        alert("successfully");
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    alert(textStatus);
+
+                }
+            });
+        } else {
+            alert("Confirm password is incorrect!!!");
+        }
+    }
+
+}]);
+
+app.controller("DashboardCtrl", ["$scope", "$state", function(r, t) {
+    r.$state = t
+}]);

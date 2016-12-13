@@ -1,41 +1,22 @@
 'use strict'
 
-app.controller('filmlistctrler', function($scope){
- $scope.filmlist1 = [
-    {
-      "film" : "Sinh vật huyền bí và nơi tìm ra chúng",
-      "type" : "Viễn tưởng, hành động",
-      "duration": "130",
-      "start_time": "18/11/2016",
-      "production": "Warner Bros",
-      "warning": "3+"
-    },
-    {
-      "film" : "Phù Thủy Tối Thượng",
-      "type" : "Viễn tưởng, hành động",
-      "duration": "130",
-      "start_time": "28/10/2016",
-      "production": "Warner Bros",
-      "warning": "3+"
-    }
-  ],
+app.controller('filmlistctrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
 
-  $scope.filmlist2 = [
-    {
-      "film" : "Sinh vật huyền bí và nơi tìm ra chúng",
-      "type" : "Viễn tưởng, hành động",
-      "duration": "130",
-      "start_time": "18/11/2016",
-      "production": "Warner Bros",
-      "warning": "3+"
-    },
-    {
-      "film" : "Sinh vật huyền bí và nơi tìm ra chúng",
-      "type" : "Viễn tưởng, hành động",
-      "duration": "130",
-      "start_time": "18/11/2016",
-      "production": "Warner Bros",
-      "warning": "3+"
-    },
-  ]
+    $scope.logout1 = function() {
+        if (AuthenticationService.isLogged) {
+            AuthenticationService.isLogged = false;
+            delete $window.sessionStorage.token;
+            $state.go("login");
+        }
+    };
+    $scope.list1 = $rootScope.filmlist1;
+    $scope.list2 = $rootScope.filmlist2;
+
+    $scope.edit1 = function(code) {
+        $rootScope.code = code;
+        $state.go("editfilm");
+    };
+
 });
+
+

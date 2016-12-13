@@ -1,36 +1,41 @@
 'use strict'
 
-app.controller('showinglistctrler', function($scope){
- $scope.showinglist = [
-    {
-      "theater" : "CGV Diamond",
-      "film" : "Sinh vật huyền bí và nơi tìm ra chúng",
-      "date" : "18/11/2016",
-      "start_time": "12:00",
-      "version": "2D",
-      "price": "70000"
-    },
-    {
-      "theater" : "CGV CTPlaza",
-      "film" : "Sinh vật huyền bí và nơi tìm ra chúng",
-      "date" : "18/11/2016",
-      "start_time": "12:00",
-      "version": "2D",
-      "price": "70000"
-    }
-  ];
+app.controller('showinglistctrler', function($scope, $http, $state, $window, AuthenticationService) {
 
-  $scope.theaters = [
-    {
-      "name" : "CGV Hoàng Văn Thụ"
-    },
+    $scope.logout1 = function() {
+        if (AuthenticationService.isLogged) {
+            AuthenticationService.isLogged = false;
+            delete $window.sessionStorage.token;
+            $state.go("login");
+        }
+    };
 
-    {
-      "name" : "CGV CTPlaza"
-    },
+    $scope.showinglist = [{
+        "theater": "CGV Diamond",
+        "film": "Sinh vật huyền bí và nơi tìm ra chúng",
+        "date": "18/11/2016",
+        "start_time": "12:00",
+        "version": "2D",
+        "price": "70000"
+    }, {
+        "theater": "CGV CTPlaza",
+        "film": "Sinh vật huyền bí và nơi tìm ra chúng",
+        "date": "18/11/2016",
+        "start_time": "12:00",
+        "version": "2D",
+        "price": "70000"
+    }];
 
-    {
-      "name" : "CGV Bitexco"
-    }
-  ]
+    $scope.theaters = [{
+            "name": "CGV Hoàng Văn Thụ"
+        },
+
+        {
+            "name": "CGV CTPlaza"
+        },
+
+        {
+            "name": "CGV Bitexco"
+        }
+    ]
 });

@@ -17,6 +17,18 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src=scripts/vendor.js></script>
+    <script src=scripts/scripts.js></script>
+    <script src="scripts/home.js"></script>
+    <script src=scripts/addfilm.js></script>
+    <script src="scripts/filmlist.js"></script>
+    <script src="scripts/editfilm.js"></script>
+    <script src="scripts/showinglist.js"></script>
+    <script src="scripts/ticketpricelist.js"></script>
+    <script src="scripts/theaterlist.js"></script>
+    <script src="scripts/addshowings.js"></script>
+    <script src="config.js"></script>
 </head>
 
 <body ng-app=yapp>
@@ -112,8 +124,7 @@
             </div>
         </div>
     </div>
-
-    <div ng-controller="" id="addshowingModal" class="modal fade " role="dialog">
+    <div ng-controller="addshowingctrler" id="addshowingModal" class="modal fade " role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content modal2">
@@ -162,8 +173,7 @@
             </div>
         </div>
     </div>
-
-    <div ng-controller="" id="editshowingModal" class="modal fade " role="dialog">
+    <div id="editshowingModal" class="modal fade " role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content modal2">
@@ -212,8 +222,7 @@
             </div>
         </div>
     </div>
-
-    <div ng-controller="" id="addticketpriceModal" class="modal fade " role="dialog">
+    <div id="addticketpriceModal" class="modal fade " role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content modal2">
@@ -246,13 +255,7 @@
             </div>
         </div>
     </div>
-    <script src=scripts/vendor.js></script>
-    <script src=scripts/scripts.js></script>
-    <script src=scripts/addfilm.js></script>
-    <script src="scripts/filmlist.js"></script>
-    <script src="scripts/showinglist.js"></script>
-    <script src="scripts/ticketpricelist.js"></script>
-    <script src="scripts/theaterlist.js"></script>
+    
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
     <script>
     // Initialize Firebase

@@ -1,12 +1,40 @@
 .title {
-	margin-left: 475px !important; 
-	margin-top: 50px !important;
+    margin-left: 475px !important;
+    margin-top: 50px !important;
 }
 
-.province{
-	margin-left: 250px !important;
-	width: 900px;
-	height: 150px;
-	background-color: #BDBDBD;
-	border-radius: 25px;
+.province {
+    margin-left: 250px !important;
+    width: 900px;
+    height: 400px;
+    background-color: #BDBDBD;
+    border-radius: 25px;
+}
+
+.theater {
+    margin-left: 250px !important;
+    width: 900px;
+    height: 150px;
+    background-color: #BDBDBD;
+    border-radius: 25px;
+}
+
+.info {
+    margin-left: 550px !important;
+    margin-top: 60px;
+}
+
+.theaterinfo {
+	margin-left: 200px;
+	font-size: 20px;
+}
+
+#address {
+	margin-left: 200px !important;
+	font-family: sans-serif;
+	
+}
+
+.edit {
+	margin-top: 400px;
 }

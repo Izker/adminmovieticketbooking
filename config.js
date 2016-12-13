@@ -1,0 +1,1 @@
+var _url_host = 'https://movie2016.herokuapp.com/api';
