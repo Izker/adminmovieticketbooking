@@ -48,7 +48,7 @@
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         <li ng-class="{active: $state.includes('editfilm')}"><a ng-click="edit1(x.code)">Edit</a></li>
-                                        <li><a href="#">Delete</a></li>
+                                        <li><a ng-click="delete(x.code)">Delete</a></li>
                                     </ul>
                                 </div>
                             </td>

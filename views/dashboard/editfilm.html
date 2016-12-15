@@ -52,10 +52,10 @@
                 <div class="format">
                     <label for="version" class="col-xs-6">Version: </label>
                     <form class="radiobtn col-xs-6" action="">
-                        <input size="20" type="checkbox" name="gender" value="2D"> 2D
-                        <input size="20" type="checkbox" name="gender" value="3D"> 3D
-                        <input size="20" type="checkbox" name="gender" value="4DX"> 4DX
-                        <input size="20" type="checkbox" name="gender" value="IMAX"> IMAX
+                        <input id="ver1" size="20" type="checkbox" name="gender" value="AAA"> 2D
+                        <input id="ver2" size="20" type="checkbox" name="gender" value="BBB"> 3D
+                        <input id="ver3" size="20" type="checkbox" name="gender" value="4DX"> 4DX
+                        <input id="ver4" size="20" type="checkbox" name="gender" value="CCC"> IMAX
                     </form>
                 </div>
                 <div class="format">
@@ -70,6 +70,10 @@
                         </option>
                     </select>
                 </div>
+                <div class="format format1">
+                    <input type="text" class="textbox" id="langarr" ng-model="langlist">
+                    <button type="submit" style="margin-left: 20px;" class="btn" ng-click="langinit()">Thêm</button>
+                </div>
                 <div class="format">
                     <label for="theaters" class="col-xs-6">Rạp chiếu: </label>
                     <select id="theaters" class="col-xs-6 textbox inputformat" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
@@ -77,6 +81,10 @@
                             <h1>Chọn rạp chiếu</h1>
                         </option>
                     </select>
+                </div>
+                <div class="format2">
+                    <input type="text" class="textbox" id="theaterarr" ng-model="theaterlist">
+                    <button type="submit" style="margin-left: 20px;" class="btn" ng-click="theaterinit()">Thêm</button>
                 </div>
                 <div class="format">
                     <label for="trailer" class="col-xs-6">Trailer: </label>
@@ -88,11 +96,18 @@
                 </div>
                 <div class="format">
                     <label for="input" class="col-xs-6 control-label">Poster</label>
-                    <input id="input" type="file" class="col-xs-6 textbox2 inputformat" multiple>
+                    <input id="input" type="file" class="col-xs-6 textbox2 inputformat" ng-click="uploadpicture()" multiple>
+                </div>
+                <div class="format">
+                    <label for="state" class="col-xs-6">Tình trạng</label>
+                    <form id="state" class="radiobtn col-xs-6" action="">
+                        <input id="state1" size="20" type="radio" name="gender" value="now">Đang chiếu
+                        <input id="state2" size="20" type="radio" name="gender" value="future">Sắp chiếu
+                    </form>
                 </div>
             </div>
             <div class="editfooter">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="save()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>

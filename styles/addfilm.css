@@ -6,17 +6,27 @@
     height: 40px;
 }
 
-.format{
-	margin-top: 10px !important;
-	padding: 20px !important;
+.format {
+    margin-top: 10px !important;
+    padding: 20px !important;
 }
 
-.radiobtn{
-	margin-left: 20px !important;
+.format1 {
+    color: #000 !important;
+    margin-top: 220px !important;
+}
+
+.format2 {
+    color: #000 !important;
+    margin-top: 5px !important;
+}
+
+.radiobtn {
+    margin-left: 20px !important;
 }
 
 .bigtextbox {
-	width: 200px;
+    width: 200px;
     margin-left: 30px;
     border-radius: 7px;
     text-align: top;
@@ -33,10 +43,9 @@
     border-radius: 7px;
     text-align: center;
     height: auto;
-
 }
 
-.editfooter{
+.editfooter {
     margin-top: 50px !important;
     margin-left: 500px !important;
 }

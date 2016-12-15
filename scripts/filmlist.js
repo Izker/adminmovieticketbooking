@@ -17,6 +17,23 @@ app.controller('filmlistctrler', function($scope, $rootScope, $state, $window, A
         $state.go("editfilm");
     };
 
+    $scope.delete = function(code) {
+        var filmcode = code;
+        $.ajax({
+            url: _url_host + '/v1/admin/films',
+            type: 'DELETE',
+            datatype: 'json',
+            data: {
+                token: $window.sessionStorage.token,
+                code: filmcode
+            },
+            success: function(data, status) {
+                console.log(status);
+            },
+            error: function(status) {
+                console.log(status);
+            }
+        });
+    }
+
 });
-
-

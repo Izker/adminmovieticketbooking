@@ -157,6 +157,40 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                     }
                 });
 
+                $.ajax({
+                    url: _url_host + '/v1/admin/languages',
+                    datatype: 'json',
+                    data: {
+                        token: data.token
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data, status) {
+                        var langlist = data.data;
+                        $rootScope.langlist = langlist;
+                    },
+                    error: function(data, status) {
+                        console.log(data);
+                    } 
+                });
+
+                $.ajax({
+                    url: _url_host + '/v1/admin/theaters',
+                    datatype: 'json',
+                    data: {
+                        token: data.token
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data, status) {
+                        var theaterlist = data.data;
+                        $rootScope.theaterlist = theaterlist;
+                    },
+                    error: function(data, status) {
+                        console.log(data);
+                    } 
+                });
+
                 $state.go("home");
             }).fail(function(status, data) {
                 console.log(status);
