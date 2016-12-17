@@ -2,10 +2,9 @@
 
 app.controller('editfilmctrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
     $scope.init = function() {
-        console.log($rootScope.filmlist1);
+        var flag = 0;
         for (var x in $rootScope.filmlist1) {
             if ($rootScope.filmlist1[x].code === $rootScope.code) {
-                console.log($rootScope.filmlist1[x]);
                 document.getElementById("film").value = $rootScope.filmlist1[x].name;
                 var sd = transformdate($rootScope.filmlist1[x].start_time);
                 document.getElementById("start_date").value = sd;
@@ -20,8 +19,28 @@ app.controller('editfilmctrler', function($scope, $rootScope, $state, $window, A
                 document.getElementById("warning").value = $rootScope.filmlist1[x].warning;
                 $scope.languages = $rootScope.langlist;
                 $scope.theaters = $rootScope.theaterlist;
+                flag = 1;
             }
         }
+        if (flag === 0) {
+            for (var x in $rootScope.filmlist2) {
+                document.getElementById("film").value = $rootScope.filmlist2[x].name;
+                var sd = transformdate($rootScope.filmlist2[x].start_time);
+                document.getElementById("start_date").value = sd;
+                var ed = transformdate($rootScope.filmlist2[x].end_time);
+                document.getElementById("end_date").value = ed;
+                document.getElementById("type").value = $rootScope.filmlist2[x].genre;
+                document.getElementById("actor").value = $rootScope.filmlist2[x].actor;
+                document.getElementById("director").value = $rootScope.filmlist2[x].director;
+                document.getElementById("duration").value = $rootScope.filmlist2[x].duration;
+                document.getElementById("description").value = $rootScope.filmlist2[x].description;
+                document.getElementById("trailer").value = $rootScope.filmlist2[x].trailer;
+                document.getElementById("warning").value = $rootScope.filmlist2[x].warning;
+                $scope.languages = $rootScope.langlist;
+                $scope.theaters = $rootScope.theaterlist;
+            }
+        }
+
     };
 
     $scope.uploadpicture = function() {
@@ -29,7 +48,6 @@ app.controller('editfilmctrler', function($scope, $rootScope, $state, $window, A
 
         var auth = firebase.auth();
         var storageRef = firebase.storage().ref();
-
 
         function handleFileSelect(evt) {
             evt.stopPropagation();
@@ -66,35 +84,35 @@ app.controller('editfilmctrler', function($scope, $rootScope, $state, $window, A
 
     var langs = [];
     var theaters = [];
+
     $scope.save = function() {
         console.log($scope.url);
-
         var vers = [];
         var lang;
         var theater;
         var filmcode = $rootScope.code;
         if (document.getElementById("ver1").checked === true) {
-            var ver1 = {code : document.getElementById("ver1").value};
+            var ver1 = { code: document.getElementById("ver1").value };
             vers.push(ver1);
         }
         if (document.getElementById("ver2").checked === true) {
-            var ver2 = {code : document.getElementById("ver2").value};
+            var ver2 = { code: document.getElementById("ver2").value };
             vers.push(ver2);
         }
         if (document.getElementById("ver3").checked === true) {
-            var ver3 = {code : document.getElementById("ver3").value};
+            var ver3 = { code: document.getElementById("ver3").value };
             vers.push(ver3);
         }
         if (document.getElementById("ver4").checked === true) {
-            var ver4 = {code : document.getElementById("ver4").value};
+            var ver4 = { code: document.getElementById("ver4").value };
             vers.push(ver4);
         }
         console.log(vers);
         var state;
         if (document.getElementById("state1").checked === true) {
-            if (document.getElementById("state1").value === "now") {
-                state = true;
-            } else {
+            state = true;
+        } else {
+            if (document.getElementById("state2").checked === true) {
                 state = false;
             }
         }
@@ -103,8 +121,11 @@ app.controller('editfilmctrler', function($scope, $rootScope, $state, $window, A
             url: _url_host + '/v1/admin/films',
             type: 'POST',
             dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'x-access-token': $window.sessionStorage.token
+            },
             data: {
-                token: $window.sessionStorage.token,
                 "code": filmcode,
                 "start_time": transformdate2(document.getElementById("start_date").value),
                 "end_time": transformdate2(document.getElementById("end_date").value),
@@ -134,6 +155,71 @@ app.controller('editfilmctrler', function($scope, $rootScope, $state, $window, A
                 alert(textStatus);
             }
         });
+
+        setTimeout(function() {
+            $.ajax({
+                url: _url_host + '/v1/admin/films',
+                datatype: 'json',
+                data: {
+                    token: $window.sessionStorage.token
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function(data, status) {
+
+                    var filmlist = data.data;
+                    console.log(filmlist);
+                    $rootScope.filmlist1 = [];
+                    $rootScope.filmlist2 = [];
+                    for (var x in filmlist) {
+                        if (filmlist[x].isNowShowing === true) {
+                            $rootScope.filmlist1.push(filmlist[x]);
+                        } else {
+                            $rootScope.filmlist2.push(filmlist[x]);
+                        }
+                    }
+                },
+                error: function(data, status) {
+                    console.log(data);
+                }
+            });
+
+            $.ajax({
+                url: _url_host + '/v1/admin/languages',
+                datatype: 'json',
+                data: {
+                    token: $window.sessionStorage.token
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function(data, status) {
+                    var langlist = data.data;
+                    $rootScope.langlist = langlist;
+                },
+                error: function(data, status) {
+                    console.log(data);
+                }
+            });
+
+            $.ajax({
+                url: _url_host + '/v1/admin/theaters',
+                datatype: 'json',
+                data: {
+                    token: $window.sessionStorage.token
+                },
+                type: 'GET',
+                dataType: 'json',
+                success: function(data, status) {
+                    var theaterlist = data.data;
+                    $rootScope.theaterlist = theaterlist;
+                },
+                error: function(data, status) {
+                    console.log(data);
+                }
+            });
+
+        }, 2000);
+
     };
 
     $scope.langlist = "";
@@ -142,12 +228,10 @@ app.controller('editfilmctrler', function($scope, $rootScope, $state, $window, A
     $scope.langinit = function() {
         if ($scope.language !== "Chọn ngôn ngữ") {
             $scope.langlist += $scope.language.name;
-
         }
-
         console.log($scope.language);
         if ($scope.language.name !== "Chọn ngôn ngữ") {
-            var langobj = {code : $scope.language.code};
+            var langobj = { code: $scope.language.code };
             langs.push(langobj);
             console.log(langs);
         }
@@ -159,7 +243,7 @@ app.controller('editfilmctrler', function($scope, $rootScope, $state, $window, A
         }
 
         if ($scope.theaters.name !== "Chọn rạp chiếu") {
-        	var theaterobj = {code : $scope.theater.code};
+            var theaterobj = { code: $scope.theater.code };
             theaters.push(theaterobj);
             console.log(theaters);
         }

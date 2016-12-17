@@ -15,9 +15,8 @@
     <link rel=stylesheet href="styles/editfilm.css">
     <link rel=stylesheet href="styles/theaterlist.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <script src=scripts/vendor.js></script>
     <script src=scripts/scripts.js></script>
     <script src="scripts/home.js"></script>
@@ -38,7 +37,7 @@
     <div>
         <div ui-view></div>
     </div>
-    <div ng-controller="addfilmcontroller" id="addfilmModal" class="modal fade " role="dialog">
+    <div ng-controller="addfilmcontroller" id="addfilmModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
             <div class="modal-content modal2">
@@ -57,7 +56,7 @@
                     </div>
                     <div class="format">
                         <label for="end_date" class="col-xs-6">Ngày kết thúc: </label>
-                        <input id="start_date" type="date" class="textbox col-xs-6">
+                        <input id="end_date" type="date" class="textbox col-xs-6">
                     </div>
                     <div class="format">
                         <label for="type" class="col-xs-6">Thể loại: </label>
@@ -65,11 +64,11 @@
                     </div>
                     <div class="format">
                         <label for="actor" class="col-xs-6">Diễn viên: </label>
-                        <textarea id="description" class="bigtextbox col-xs-6"></textarea>
+                        <textarea id="actor" class="bigtextbox col-xs-6"></textarea>
                     </div>
                     <div class="format">
                         <label for="director" class="col-xs-6">Đạo diễn: </label>
-                        <textarea id="description" class="bigtextbox col-xs-6"></textarea>
+                        <textarea id="director" class="bigtextbox col-xs-6"></textarea>
                     </div>
                     <div class="format">
                         <label for="duration" class="col-xs-6">Thời lượng: </label>
@@ -78,10 +77,10 @@
                     <div class="format">
                         <label for="version" class="col-xs-6">Version: </label>
                         <form class="radiobtn col-xs-6" action="">
-                            <input size="20" type="checkbox" name="gender" value="2D"> 2D
-                            <input size="20" type="checkbox" name="gender" value="3D"> 3D
-                            <input size="20" type="checkbox" name="gender" value="4DX"> 4DX
-                            <input size="20" type="checkbox" name="gender" value="IMAX"> IMAX
+                            <input id="ver1" size="20" type="checkbox" name="gender" value="AAA"> 2D
+                            <input id="ver2" size="20" type="checkbox" name="gender" value="BBB"> 3D
+                            <input id="ver3" size="20" type="checkbox" name="gender" value="4DX"> 4DX
+                            <input id="ver4" size="20" type="checkbox" name="gender" value="CCC"> IMAX
                         </form>
                     </div>
                     <div class="format">
@@ -90,19 +89,27 @@
                     </div>
                     <div class="format">
                         <label for="language" class="col-xs-6">Ngôn ngữ: </label>
-                        <select id="language" class="col-xs-6 textbox" ng-model="language" ng-options="item.name for item in languages" ng-click="#">
+                        <select id="language" class="col-xs-6 textbox" ng-model="language" ng-options="item.name for item in languages" ng-click="init()">
                             <option disabled selected value>
                                 <h1>Chọn ngôn ngữ</h1>
                             </option>
                         </select>
                     </div>
+                    <div class="format format1">
+                        <input type="text" class="textbox" id="langarr" ng-model="langlist">
+                        <button type="submit" style="margin-left: 20px;" class="btn" ng-click="langinit()">Thêm</button>
+                    </div>
                     <div class="format">
                         <label for="theaters" class="col-xs-6">Rạp chiếu: </label>
-                        <select id="theaters" class="col-xs-6 textbox" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
+                        <select id="theaters" class="col-xs-6 textbox" ng-options="item.name for item in theaters" ng-model="theater" ng-click="init()">
                             <option disabled selected value>
                                 <h1>Chọn rạp chiếu</h1>
                             </option>
                         </select>
+                    </div>
+                    <div class="format2">
+                        <input type="text" class="textbox" id="theaterarr" ng-model="theaterlist">
+                        <button type="submit" style="margin-left: 20px;" class="btn" ng-click="theaterinit()">Thêm</button>
                     </div>
                     <div class="format">
                         <label for="trailer" class="col-xs-6">Trailer: </label>
@@ -114,11 +121,18 @@
                     </div>
                     <div class="format">
                         <label for="input" class="col-xs-6 control-label">Poster</label>
-                        <input id="input" type="file" class="col-xs-6 textbox2" multiple>
+                        <input id="input" type="file" class="col-xs-6 textbox2" ng-click="uploadpicture()" multiple>
+                    </div>
+                    <div class="format">
+                        <label for="state" class="col-xs-6">Tình trạng</label>
+                        <form id="state" class="radiobtn col-xs-6" action="">
+                            <input id="state1" size="20" type="radio" name="gender" value="now">Đang chiếu
+                            <input id="state2" size="20" type="radio" name="gender" value="future">Sắp chiếu
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="filmadd()">Add</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -255,20 +269,19 @@
             </div>
         </div>
     </div>
-    
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
     <script>
-      var config = {
-            apiKey: "AIzaSyCA9HKsBWIHIvMv0BTOUV4RWgGdDuYSssA",
-            authDomain: "upload-picture.firebaseapp.com",
-            databaseURL: "https://upload-picture.firebaseio.com",
-            storageBucket: "upload-picture.appspot.com",
-            messagingSenderId: "56060646483"
-        };
-        firebase.initializeApp(config);
+    var config = {
+        apiKey: "AIzaSyCA9HKsBWIHIvMv0BTOUV4RWgGdDuYSssA",
+        authDomain: "upload-picture.firebaseapp.com",
+        databaseURL: "https://upload-picture.firebaseio.com",
+        storageBucket: "upload-picture.appspot.com",
+        messagingSenderId: "56060646483"
+    };
+    firebase.initializeApp(config);
 
-        var email = "semilucias@gmail.com";
-        var password = "hoaianh56";
+    var email = "semilucias@gmail.com";
+    var password = "hoaianh56";
     </script>
 </body>
 

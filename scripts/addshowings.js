@@ -1,37 +1,49 @@
 'use strict'
 
-app.controller('addshowingctrler', function($scope){
- $scope.showinglist = [
-    {
-      "theater" : "CGV Diamond",
-      "film" : "Sinh vật huyền bí và nơi tìm ra chúng",
-      "date" : "18/11/2016",
-      "start_time": "12:00",
-      "version": "2D",
-      "price": "70000"
-    },
-    {
-      "theater" : "CGV CTPlaza",
-      "film" : "Sinh vật huyền bí và nơi tìm ra chúng",
-      "date" : "18/11/2016",
-      "start_time": "12:00",
-      "version": "2D",
-      "price": "70000"
-    }
-  ];
+app.controller('addshowingctrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
 
-  $scope.theaters = [
-    {
-      "name" : "CGV Hoàng Văn Thụ"
-    },
+    $scope.logout1 = function() {
+        if (AuthenticationService.isLogged) {
+            AuthenticationService.isLogged = false;
+            delete $window.sessionStorage.token;
+            $state.go("login");
+        }
+    };
 
-    {
-      "name" : "CGV CTPlaza"
-    },
+    $scope.list1 = $rootScope.filmlist1;
+    $scope.list2 = $rootScope.filmlist2;
+    $scope.theaters = $rootScope.theaterlist;
 
-    {
-      "name" : "CGV Bitexco"
-    }
-  ];
+    $scope.edit1 = function(code) {
+        $rootScope.code = code;
+        $state.go("editfilm");
+    };
 
+    $scope.delete = function(code) {
+        var showingcode = code;
+        $.ajax({
+            url: _url_host + '/v1/admin/schedules',
+            type: 'DELETE',
+            datatype: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'x-access-token': $window.sessionStorage.token
+            },
+            data: {
+                code: showingcode
+            },
+            success: function(data, status) {
+                alert(status);
+                console.log(status);
+            },
+            error: function(status) {
+                alert(status);
+                console.log(status);
+            }
+        });
+
+        setTimeout(function() {
+            location.reload();
+        }, 2000);
+    };
 });

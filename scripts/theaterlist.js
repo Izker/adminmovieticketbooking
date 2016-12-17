@@ -1,6 +1,6 @@
 'use strict'
 
-app.controller('theaterlistctrler', function($scope, $state, $window, AuthenticationService) {
+app.controller('theaterlistctrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
 
     $scope.logout1 = function() {
         if (AuthenticationService.isLogged) {
@@ -9,19 +9,8 @@ app.controller('theaterlistctrler', function($scope, $state, $window, Authentica
             $state.go("login");
         }
     };
-    $scope.provinces = [{
-        "id": "hanoi",
-        "name": "Hà Nội"
-    }, {
-        "id": "hochiminh",
-        "name": "Hồ Chí Minh"
-    }, {
-        "id": "dongnai",
-        "name": "Đồng Nai"
-    }, {
-        "id": "danang",
-        "name": "Đà Nẵng"
-    }];
+
+    $scope.provinces = $rootScope.citys;
 
     $scope.hn = [{
         "name": "CGV Vincom Center Bà Triệu"

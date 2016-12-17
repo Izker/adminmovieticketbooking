@@ -19,23 +19,23 @@
             <h2>Danh sách suất chiếu</h2>
         </div>
         <div class="container row condition">
-            <div class="row col-xs-6 col-sm-2">
+            <div class="row col-xs-6 col-sm-3">
                 <h5>Chọn rạp:</h5>
-                <select class="option" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
+                <select class="option" ng-options="item.name for item in theaters" ng-model="theater" ng-click="gettheater()">
                     <option disabled selected value>
                         <h1>Chọn rạp</h1>
                     </option>
                 </select>
             </div>
-            <div class="col-xs-6 col-sm-2">
+            <div id="filmpicker" class="col-xs-6 col-sm-3">
                 <h5>Chọn phim:</h5>
-                <select style="width: 150px !important;" ng-options="item in films" ng-model="film" ng-click="#">
+                <select style="width: 150px !important;" ng-options="item in list1" ng-model="film" ng-click="#">
                     <option disabled selected value>
                         <h1>Chọn phim</h1>
                     </option>
                 </select>
             </div>
-            <div class="col-xs-6 col-sm-2">
+            <div class="col-xs-6 col-sm-3">
                 <h5>Chọn ngày:</h5>
                 <select ng-options="item in dates" ng-model="date" ng-click="#">
                     <option disabled selected value>
@@ -43,7 +43,7 @@
                     </option>
                 </select>
             </div>
-            <div class="col-xs-6 col-sm-2">
+            <div class="col-xs-6 col-sm-3">
                 <h5>Version:</h5>
                 <select ng-options="item in version" ng-model="version" ng-click="#">
                     <option disabled selected value>
@@ -51,7 +51,7 @@
                     </option>
                 </select>
             </div>
-            <div class="col-xs-6 col-sm-2 findbtn">
+            <div class="col-xs-6 col-sm-3 findbtn">
                 <a class="btn btn-default">Duyệt</a>
             </div>
         </div>
@@ -82,8 +82,8 @@
                                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                     <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a data-toggle="modal" data-target="#editshowingModal">Edit</a></li>
-                                    <li><a href="#">Delete</a></li>
+                                    <li><a data-toggle="modal" data-target="#editshowingModal" ng-click="edit1(x.code)">Edit</a></li>
+                                    <li><a ng-click="delete(x.code)">Delete</a></li>
                                 </ul>
                             </div>
                         </td>

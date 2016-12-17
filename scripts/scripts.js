@@ -1,10 +1,13 @@
 "use strict";
 var app = angular.module("yapp", ["ui.router", "snap", "ngAnimate"]);
-app.factory('AuthenticationService', function() {
-    var auth = {
-        isLogged: false
+app.factory('AuthenticationService', function($window) {
+    var mlogged = false;
+    if ($window.sessionStorage.token) {
+        mlogged = true;
     }
-
+    var auth = {
+        isLogged: mlogged
+    }
     return auth;
 });
 app.factory('UserService', function($http) {
@@ -32,15 +35,104 @@ app.config(['$httpProvider', function($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 }]);
 
+
 angular.module("yapp").run(function($rootScope, $state, $http, $window, AuthenticationService) {
-    $http.defaults.headers.common.Authorization = $window.sessionStorage.token;;
+    $http.defaults.headers.common.Authorization = $window.sessionStorage.token;
 
     $rootScope.$on("$stateChangeStart", function(event, nextRoute, currentRoute) {
+
+        //delay html loading
+        function sleep(delay) {
+            var start = new Date().getTime();
+            while (new Date().getTime() < start + delay);
+        }
+        sleep(200);
+
         if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
             event.preventDefault();
             $state.go("login");
         }
     });
+
+    if (AuthenticationService.isLogged === true) {
+        $.ajax({
+            url: _url_host + '/v1/admin/films',
+            datatype: 'json',
+            data: {
+                token: $window.sessionStorage.token
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function(data, status) {
+
+                var filmlist = data.data;
+                console.log(filmlist);
+                $rootScope.filmlist1 = [];
+                $rootScope.filmlist2 = [];
+                for (var x in filmlist) {
+                    if (filmlist[x].isNowShowing === true) {
+                        $rootScope.filmlist1.push(filmlist[x]);
+                    } else {
+                        $rootScope.filmlist2.push(filmlist[x]);
+                    }
+                }
+            },
+            error: function(data, status) {
+                console.log(data);
+            }
+        });
+
+        $.ajax({
+            url: _url_host + '/v1/admin/languages',
+            datatype: 'json',
+            data: {
+                token: $window.sessionStorage.token
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function(data, status) {
+                var langlist = data.data;
+                $rootScope.langlist = langlist;
+            },
+            error: function(data, status) {
+                console.log(data);
+            }
+        });
+
+        $.ajax({
+            url: _url_host + '/v1/admin/theaters',
+            datatype: 'json',
+            data: {
+                token: $window.sessionStorage.token
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function(data, status) {
+                var theaterlist = data.data;
+                $rootScope.theaterlist = theaterlist;
+            },
+            error: function(data, status) {
+                console.log(data);
+            }
+        });
+
+        $.ajax({
+            url: _url_host + '/v1/admin/citys',
+            datatype: 'json',
+            data: {
+                token: $window.sessionStorage.token
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function(data, status) {
+                var citys = data.data;
+                $rootScope.citys = citys;
+            },
+            error: function(data, status) {
+                console.log(data);
+            }
+        });
+    }
 });
 
 app.config(["$stateProvider", "$urlRouterProvider", function(r, t) {
@@ -76,7 +168,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function(r, t) {
             parent: "dashboard",
             templateUrl: "views/dashboard/filmlist.html",
             controller: "filmlistctrler",
-            access: { requiredLogin: false }
+            access: { requiredLogin: true }
         })
         .state("showinglist", {
             url: "/showinglist",
@@ -97,7 +189,7 @@ app.config(["$stateProvider", "$urlRouterProvider", function(r, t) {
             parent: "dashboard",
             templateUrl: "views/dashboard/editfilm.html",
             controller: "editfilmctrler",
-            access: { requiredLogin: false }
+            access: { requiredLogin: true }
         })
         .state("theaterlist", {
             url: "/theaterlist",
@@ -171,7 +263,7 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                     },
                     error: function(data, status) {
                         console.log(data);
-                    } 
+                    }
                 });
 
                 $.ajax({
@@ -188,7 +280,24 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                     },
                     error: function(data, status) {
                         console.log(data);
-                    } 
+                    }
+                });
+
+                $.ajax({
+                    url: _url_host + '/v1/admin/citys',
+                    datatype: 'json',
+                    data: {
+                        token: data.token
+                    },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data, status) {
+                        var citys = data.data;
+                        $rootScope.citys = citys;
+                    },
+                    error: function(data, status) {
+                        console.log(data);
+                    }
                 });
 
                 $state.go("home");
@@ -197,8 +306,6 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                 console.log(data);
             });
         }
-
-
     }
 
     $scope.logout = function logout() {

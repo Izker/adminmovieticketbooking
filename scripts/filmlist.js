@@ -2,6 +2,7 @@
 
 app.controller('filmlistctrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
 
+  
     $scope.logout1 = function() {
         if (AuthenticationService.isLogged) {
             AuthenticationService.isLogged = false;
@@ -9,6 +10,7 @@ app.controller('filmlistctrler', function($scope, $rootScope, $state, $window, A
             $state.go("login");
         }
     };
+
     $scope.list1 = $rootScope.filmlist1;
     $scope.list2 = $rootScope.filmlist2;
 
@@ -23,17 +25,25 @@ app.controller('filmlistctrler', function($scope, $rootScope, $state, $window, A
             url: _url_host + '/v1/admin/films',
             type: 'DELETE',
             datatype: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'x-access-token': $window.sessionStorage.token
+            },
             data: {
-                token: $window.sessionStorage.token,
                 code: filmcode
             },
             success: function(data, status) {
+                alert(status);
                 console.log(status);
             },
             error: function(status) {
+                alert(status);
                 console.log(status);
             }
         });
-    }
 
+        setTimeout(function() {
+            location.reload();
+        }, 2000);
+    }
 });

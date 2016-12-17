@@ -1,4 +1,7 @@
-<div>
+<div id="panel1">
+    <h1>Page is loading.</h1>
+</div>
+<div id="panel2">
     <snap-drawer class="bg-dark">
         <div class=snap-menu>
             <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
@@ -47,7 +50,7 @@
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li ng-class="{active: $state.includes('editfilm')}"><a ng-click="edit1(x.code)">Edit</a></li>
+                                        <li id="editbtn1" ng-class="{active: $state.includes('editfilm')}"><a ng-click="edit1(x.code)">Edit</a></li>
                                         <li><a ng-click="delete(x.code)">Delete</a></li>
                                     </ul>
                                 </div>
@@ -71,7 +74,7 @@
             </div>
             <div class="container">
                 <h2>Phim sắp chiếu</h2>
-                <p>Danh sách các phim sắp chiếu1</p>
+                <p>Danh sách các phim sắp chiếu</p>
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -86,7 +89,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="x in list2">
-                            <td>{{x.film}}</td>
+                            <td>{{x.name}}</td>
                             <td>{{x.genre}}</td>
                             <td>{{x.duration}}</td>
                             <td>{{x.start_time}}</td>
@@ -97,8 +100,8 @@
                                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Edit</a></li>
-                                        <li><a href="#">Delete</a></li>
+                                        <li><a id="editbtn2" ng-class="{active: $state.includes('editfilm')}" ng-click="edit1(x.code)">Edit</a></li>
+                                        <li><a ng-click="delete(x.code)">Delete</a></li>
                                     </ul>
                                 </div>
                             </td>

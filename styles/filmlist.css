@@ -1,7 +1,13 @@
+#panel2{
+    display: initial;
+}
+
+#panel1{
+    display: none;
+}
 .table-hover tr:hover {
     color: black !important;
 }
-
 
 /* Dropdown Button */
 
