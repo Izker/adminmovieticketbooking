@@ -22,34 +22,16 @@
             <h1 class="title">Rạp chiếu phim</h1>
         </div>
         <hr style="width: 600px; margin-left: 400px !important;">
-        <div class="province">
+        <div id="citylist" class="province">
             <ul>
                 <li ng-repeat="x in provinces" class="btn col-md-3">
                     <h4 style="margin-top: 20px; margin-right: 30px;" ng-click="showtheaters(x.code)">{{x.name}}</h4></li>
             </ul>
-            <hr style="width: 800px !important; margin-left: 50px !important;">
+            <hr style="width: 900px !important; margin-left: 50px !important;">
             <div id="hanoi">
                 <ul>
-                    <li ng-repeat="x in hn" class="btn col-md-4" ng-click="#">
-                        <h4 style="margin-top: 20px;" ng-click="showtheaterinfo(x.name)">{{x.name}}</h4></li>
-                </ul>
-            </div>
-            <div id="hochiminh">
-                <ul>
-                    <li ng-repeat="x in hcm" class="btn col-md-4" ng-click="#">
-                        <h4 style="margin-top: 20px;" ng-click="showtheaterinfo(x.name)">{{x.name}}</h4></li>
-                </ul>
-            </div>
-            <div id="danang">
-                <ul>
-                    <li ng-repeat="x in danang" class="btn col-md-4" ng-click="#">
-                        <h4 style="margin-top: 20px;" ng-click="showtheaterinfo(x.name)">{{x.name}}</h4></li>
-                </ul>
-            </div>
-            <div id="dongnai">
-                <ul>
-                    <li ng-repeat="x in dongnai" class="btn col-md-4" ng-click="#">
-                        <h4 style="margin-top: 20px;" ng-click="showtheaterinfo(x.name)">{{x.name}}</h4></li>
+                    <li ng-repeat="x in ptheaters" class="btn col-md-4" ng-click="#">
+                        <h4 style="margin-top: 20px;" ng-click="showtheaterinfo(x.name, x.city_code, x.code)">{{x.name}}</h4></li>
                 </ul>
             </div>
         </div>
@@ -60,10 +42,114 @@
                 <div id="address"></div>
             </div>
             <div class="col-xs-6 col-lg-4">
-                <input type="button" value="Add" class=btn style="margin-top: 40px; color: #000 !important;"><br>
-                <input type="button" value="Edit" class=btn style="margin-top: 40px; color: #000 !important;">
+                <input type="button" value="Add" data-toggle="modal" data-target="#addtheaterModal" class=btn style="margin-top: 40px; color: #000 !important;">
+                <br>
+                <input type="button" value="Edit" data-toggle="modal" data-target="#edittheaterModal" class=btn style="margin-top: 40px; color: #000 !important;">
+                <input type="button" value="Delete" ng-click="delete()" class=btn style="margin-top: 40px; color: #000 !important;">
             </div>
         </div>
+    </snap-content>
 </div>
-</snap-content>
+<div style="color: #000 !important;" ng-controller="theaterlistctrler" id="addtheaterModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content modal2">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Thêm rạp chiếu phim</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="format">
+                    <label for="theatername2" class="col-xs-6">Tên rạp chiếu: </label>
+                    <input id="theatername2" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="tel2" class="col-xs-6">Điện thoại: </label>
+                    <input id="tel2" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="address2" class="col-xs-6">Địa chỉ: </label>
+                    <input id="address2" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="map2" class="col-xs-6">Bản đồ: </label>
+                    <input id="map2" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="room2" class="col-xs-6">Phòng chiếu: </label>
+                    <input id="room2" class="textbox col-xs-6">
+                    <label for="roomtype2" class="col-xs-6">Loại phòng chiếu</label>
+                    <input id="roomtype2" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="input1" class="col-xs-6 control-label">Photo</label>
+                    <input id="input1" type="file" class="col-xs-6 textbox2" ng-click="uploadphoto()" multiple>
+                </div>
+                <div class="format">
+                    <label for="city2" class="col-xs-6">Thuộc thành phố: </label>
+                    <select id="city2" class="col-xs-6 textbox" ng-model="city" ng-options="item.name for item in citys" ng-click="#">
+                        <option disabled selected value>
+                            <h1>Chọn thành phố</h1>
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="theateradd()">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="color: #000 !important;" ng-controller="theaterlistctrler" id="edittheaterModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content modal2">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Chỉnh sửa thông tin rạp chiếu</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="format">
+                    <label for="theatername3" class="col-xs-6">Tên rạp chiếu: </label>
+                    <input id="theatername3" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="tel3" class="col-xs-6">Điện thoại: </label>
+                    <input id="tel3" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="address3" class="col-xs-6">Địa chỉ: </label>
+                    <input id="address3" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="map3" class="col-xs-6">Bản đồ: </label>
+                    <input id="map3" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="room3" class="col-xs-6">Phòng chiếu: </label>
+                    <input id="room3" class="textbox col-xs-6">
+                    <label for="roomtype3" class="col-xs-6">Loại phòng chiếu</label>
+                    <input id="roomtype3" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="input3" class="col-xs-6 control-label">Photo</label>
+                    <input id="input3" type="file" class="col-xs-6 textbox2" ng-click="uploadpicture()" multiple>
+                </div>
+                <div class="format">
+                    <label for="city2" class="col-xs-6">Thuộc thành phố: </label>
+                    <select id="city2" class="col-xs-6 textbox" ng-model="city" ng-options="item.name for item in citys" ng-click="#">
+                        <option disabled selected value>
+                            <h1>Chọn thành phố</h1>
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="theateredit()">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

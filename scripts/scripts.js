@@ -1,5 +1,5 @@
-"use strict";
-var app = angular.module("yapp", ["ui.router", "snap", "ngAnimate"]);
+'use strict';
+var app = angular.module('yapp', ['ui.router', 'snap', 'ngAnimate']);
 app.factory('AuthenticationService', function($window) {
     var mlogged = false;
     if ($window.sessionStorage.token) {
@@ -46,7 +46,7 @@ angular.module("yapp").run(function($rootScope, $state, $http, $window, Authenti
             var start = new Date().getTime();
             while (new Date().getTime() < start + delay);
         }
-        sleep(200);
+        sleep(300);
 
         if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
             event.preventDefault();

@@ -2,7 +2,6 @@
 
 app.controller('filmlistctrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
 
-  
     $scope.logout1 = function() {
         if (AuthenticationService.isLogged) {
             AuthenticationService.isLogged = false;

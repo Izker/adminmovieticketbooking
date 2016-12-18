@@ -13,17 +13,22 @@ app.controller('showinglistctrler', function($scope, $rootScope, $http, $state, 
     $scope.theaters = $rootScope.theaterlist;
     console.log($scope.theaters);
     $scope.list1 = [];
-    var theatercode;
 
-    $scope.gettheater = function(code) {
-        theatercode = code;
-       
-    };
+    $scope.theater;
+    // var theatercode;
 
-    $scope.getfilmlist = function() {
+    // $scope.gettheater = function(code) {
+    //     theatercode = code;
+    // };
+
+    $scope.filmlistinit = function() {
+        var tcode = $scope.theater.code;
+        $scope.list1 = [];
         for (var x in $rootScope.filmlist1) {
-            if ($rootScope.filmlist1[x].code === theatercode) {
-                $scope.list1.push($rootScope.filmlist1[x]);
+            for (var y in $rootScope.filmlist1[x].theaters) {
+                if ($rootScope.filmlist1[x].theaters[y].theater_code === tcode) {
+                    $scope.list1.push($rootScope.filmlist1[x]);
+                }
             }
         }
     }
@@ -33,10 +38,10 @@ app.controller('showinglistctrler', function($scope, $rootScope, $http, $state, 
 
 
 
-    $scope.edit1 = function(code) {
-        $rootScope.code = code;
-        $state.go("editfilm");
-    };
+    // // $scope.edit1 = function(code) {
+    // //     $rootScope.code = code;
+    // //     $state.go("editfilm");
+    // // };
 
     $scope.delete = function(code) {
         var showingcode = code;

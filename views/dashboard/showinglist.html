@@ -21,15 +21,15 @@
         <div class="container row condition">
             <div class="row col-xs-6 col-sm-3">
                 <h5>Chọn rạp:</h5>
-                <select class="option" ng-options="item.name for item in theaters" ng-model="theater" ng-click="gettheater()">
+                <select class="option" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
                     <option disabled selected value>
                         <h1>Chọn rạp</h1>
                     </option>
                 </select>
             </div>
-            <div id="filmpicker" class="col-xs-6 col-sm-3">
+            <div  id="filmpicker" class="col-xs-6 col-sm-3">
                 <h5>Chọn phim:</h5>
-                <select style="width: 150px !important;" ng-options="item in list1" ng-model="film" ng-click="#">
+                <select style="color: #000 !important; width: 150px !important;" ng-options="item.name for item in list1" ng-model="film" ng-click="filmlistinit()">
                     <option disabled selected value>
                         <h1>Chọn phim</h1>
                     </option>
