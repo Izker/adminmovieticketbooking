@@ -72,7 +72,7 @@ app.controller('addshowingcontroler', function($scope, $rootScope, $state, $wind
             price = ver4;
         }
 
-        var filmcode = $scope.film.code;
+        var filmcode = $scope.afilm.code;
         var theatercode = $scope.atheater.code;
         var roomcode = $scope.room.code;
         console.log(filmcode);
