@@ -3,10 +3,10 @@
         <div class=snap-menu>
             <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
             <ul class=snap-ul>
-                <li ng-class="{active: $state.includes('home')}"><a ui-sref=home>HOME</a></li>
+                
                 <li ng-class="{active: $state.includes('filmlist')}"><a ui-sref=filmlist>Danh sách phim</a></li>
                 <li ng-class="{active: $state.includes('showinglist')}"><a ui-sref=showinglist>Danh sách suất chiếu</a></li>
-                <li ng-class="{active: $state.includes('ticketpricelist')}"><a ui-sref="ticketpricelist">Danh sách giá vé</a></li>
+                <!-- <li ng-class="{active: $state.includes('ticketpricelist')}"><a ui-sref="ticketpricelist">Danh sách giá vé</a></li> -->
                 <li ng-class="{active: $state.includes('theaterlist')}"><a ui-sref="theaterlist">Rạp chiếu phim</a></li>
                 <li><a ng-click="logout1()">Đăng xuất</a></li>
             </ul>
@@ -37,15 +37,16 @@
         </div>
         <div id="info">
             <h1 class="info">Thông tin rạp chiếu</h1>
-            <div class="col-xs-12 col-sm-6 col-lg-8">
+            <div>
                 <h2 id="theatername" class="theaterinfo"></h2>
                 <div id="address"></div>
             </div>
-            <div class="col-xs-6 col-lg-4">
-                <input type="button" value="Add" data-toggle="modal" data-target="#addtheaterModal" class=btn style="margin-top: 40px; color: #000 !important;">
+            <div>
+                <input type="button" value="Add" data-toggle="modal" data-target="#addtheaterModal" class="btn col-xs-6 col-sm-4" style="margin-top: 80px; margin-left: 200px; color: #000 !important; width: 70px;">
                 <br>
-                <input type="button" value="Edit" data-toggle="modal" data-target="#edittheaterModal" class=btn style="margin-top: 40px; color: #000 !important;">
-                <input type="button" value="Delete" ng-click="delete()" class=btn style="margin-top: 40px; color: #000 !important;">
+                <input type="button" value="Edit" data-toggle="modal" data-target="#edittheaterModal" class="btn col-xs-6 col-sm-4" style="margin-top: 60px; margin-left: 30px;  color: #000 !important; width: 70px;">
+                <br>
+                <input type="button" value="Delete" ng-click="delete()" class="btn col-xs-6 col-sm-4" style="margin-top: 40px; color: #000 !important; margin-left: 30px; width: 70px;">
             </div>
         </div>
     </snap-content>
@@ -147,7 +148,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="theateredit()">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="theateredit()">Save</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>

@@ -6,28 +6,6 @@
     <title>Admin</title>
     <meta name=description>
     <meta name=viewport content="width=device-width">
-    <link rel=stylesheet href=styles/vendor.css>
-    <link rel=stylesheet href=styles/main.css>
-    <link rel=stylesheet href=styles/home.css>
-    <link rel=stylesheet href="styles/filmlist.css">
-    <link rel=stylesheet href="styles/showinglist.css">
-    <link rel=stylesheet href="styles/addfilm.css">
-    <link rel=stylesheet href="styles/editfilm.css">
-    <link rel=stylesheet href="styles/theaterlist.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="scripts/vendor.js"></script>
-    <script src="scripts/scripts.js"></script>
-    <script src="scripts/home.js"></script>
-    <script src="scripts/addfilm.js"></script>
-    <script src="scripts/filmlist.js"></script>
-    <script src="scripts/editfilm.js"></script>
-    <script src="scripts/showinglist.js"></script>
-    <script src="scripts/ticketpricelist.js"></script>
-    <script src="scripts/theaterlist.js"></script>
-    <script src="scripts/addshowings.js"></script>
-    <script src="config.js"></script>
 </head>
 
 <body ng-app=yapp>
@@ -87,7 +65,6 @@
                         <label for="description" class="col-xs-6">Mô tả: </label>
                         <textarea id="description" class="bigtextbox col-xs-6"></textarea>
                     </div>
-                    
                     <div class="format">
                         <label for="language" class="col-xs-6">Ngôn ngữ: </label>
                         <select id="language" class="col-xs-6 textbox" ng-model="language" ng-options="item.name for item in languages" ng-click="init()">
@@ -139,104 +116,6 @@
             </div>
         </div>
     </div>
-    <div ng-controller="addshowingctrler" id="addshowingModal" class="modal fade " role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content modal2">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Thêm suất chiếu</h4>
-                </div>
-                <div class="modal-body row">
-                    <div class="format">
-                        <label for="film" class="col-xs-6">Phim: </label>
-                        <select id="film" class="col-xs-6 textbox" ng-model="film" ng-options="item.name for item in films" ng-click="#">
-                            <option disabled selected value>
-                                <h1>Chọn phim</h1>
-                            </option>
-                        </select>
-                    </div>
-                    <div class="format">
-                        <label for="start_date" class="col-xs-6">Ngày: </label>
-                        <input id="start_date" type="date" class="textbox col-xs-6">
-                    </div>
-                    <div class="format">
-                        <label for="stime" class="col-xs-6">Thời gian bắt đầu: </label>
-                        <input id="stime" class="textbox col-xs-6">
-                    </div>
-                    <div class="format">
-                        <label for="room" class="col-xs-6">Phòng chiếu: </label>
-                        <select id="room" class="col-xs-6 textbox" ng-model="room" ng-options="item.name for item in rooms" ng-click="#">
-                            <option disabled selected value>
-                                <h1>Chọn phòng</h1>
-                            </option>
-                        </select>
-                    </div>
-                    <div class="format">
-                        <label for="theaters" class="col-xs-6">Rạp chiếu: </label>
-                        <select id="theaters" class="col-xs-6 textbox" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
-                            <option disabled selected value>
-                                <h1>Chọn rạp chiếu</h1>
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Add</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div id="editshowingModal" class="modal fade " role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content modal2">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Sửa suất chiếu</h4>
-                </div>
-                <div class="modal-body row">
-                    <div class="format">
-                        <label for="film" class="col-xs-6">Phim: </label>
-                        <select id="film" class="col-xs-6 textbox" ng-model="film" ng-options="item.name for item in films" ng-click="#">
-                            <option disabled selected value>
-                                <h1>Chọn phim</h1>
-                            </option>
-                        </select>
-                    </div>
-                    <div class="format">
-                        <label for="start_date" class="col-xs-6">Ngày: </label>
-                        <input id="start_date" type="date" class="textbox col-xs-6">
-                    </div>
-                    <div class="format">
-                        <label for="stime" class="col-xs-6">Thời gian bắt đầu: </label>
-                        <input id="stime" class="textbox col-xs-6">
-                    </div>
-                    <div class="format">
-                        <label for="room" class="col-xs-6">Phòng chiếu: </label>
-                        <select id="room" class="col-xs-6 textbox" ng-model="room" ng-options="item.name for item in rooms" ng-click="#">
-                            <option disabled selected value>
-                                <h1>Chọn phòng</h1>
-                            </option>
-                        </select>
-                    </div>
-                    <div class="format">
-                        <label for="theaters" class="col-xs-6">Rạp chiếu: </label>
-                        <select id="theaters" class="col-xs-6 textbox" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
-                            <option disabled selected value>
-                                <h1>Chọn rạp chiếu</h1>
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div id="addticketpriceModal" class="modal fade " role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -270,8 +149,46 @@
             </div>
         </div>
     </div>
+
+
+    <link rel=stylesheet href=styles/vendor.css>
+    <link rel=stylesheet href=styles/main.css>
+    <link rel=stylesheet href=styles/home.css>
+    <link rel=stylesheet href="styles/filmlist.css">
+    <link rel=stylesheet href="styles/showinglist.css">
+    <link rel=stylesheet href="styles/addfilm.css">
+    <link rel=stylesheet href="styles/editfilm.css">
+    <link rel=stylesheet href="styles/theaterlist.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- Thu vien qq -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel=stylesheet href=styles/datedropper.min.css>
+    <script src="scripts/datedropper/datedropper.min.js"></script>
+
+    <link rel=stylesheet href=styles/timedropper.min.css>
+    <script src="scripts/timedropper/timedropper.min.js"></script>
     
-    
+    <script src="scripts/vendor.js"></script>
+    <script src="scripts/scripts.js"></script>
+    <script src="scripts/home.js"></script>
+    <script src="scripts/addfilm.js"></script>
+    <script src="scripts/filmlist.js"></script>
+    <script src="scripts/editfilm.js"></script>
+    <script src="scripts/showinglist.js"></script>
+    <script src="scripts/ticketpricelist.js"></script>
+    <script src="scripts/theaterlist.js"></script>
+    <script src="scripts/addshowings.js"></script>
+    <script src="scripts/editshowings.js"></script>
+    <script src="config.js"></script>
+    <script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
+    <link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet" />
+
+
+
     <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
     <script>
     var config = {

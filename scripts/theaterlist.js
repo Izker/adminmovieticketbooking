@@ -30,6 +30,8 @@ app.controller('theaterlistctrler', function($scope, $rootScope, $state, $window
         $rootScope.fcode = code;
         document.getElementById("theatername").innerHTML = name;
         var cityname;
+        var phone;
+        var address;
         for (var x in $rootScope.citys) {
             if ($rootScope.citys[x].code === citycode) {
                 cityname = $rootScope.citys[x].name;

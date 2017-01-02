@@ -66,9 +66,7 @@ app.controller('addtheaterctrler', function($scope, $rootScope, $state, $window,
                 'x-access-token': $window.sessionStorage.token
             },
             data: {
-
                 "name": document.getElementById("theatername2").value,
-
                 "address": document.getElementById("address2").value,
                 "tel": document.getElementById("tel2").value,
                 "map": document.getElementById("map2").value,

@@ -3,10 +3,10 @@
         <div class=snap-menu>
             <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
             <ul class=snap-ul>
-                <li ng-class="{active: $state.includes('home')}"><a ui-sref=home>HOME</a></li>
+                
                 <li ng-class="{active: $state.includes('filmlist')}"><a ui-sref=filmlist>Danh sách phim</a></li>
                 <li ng-class="{active: $state.includes('showinglist')}"><a ui-sref=showinglist>Danh sách suất chiếu</a></li>
-                <li ng-class="{active: $state.includes('ticketpricelist')}"><a ui-sref=ticketpricelist>Danh sách giá vé</a></li>
+                <!-- <li ng-class="{active: $state.includes('ticketpricelist')}"><a ui-sref=ticketpricelist>Danh sách giá vé</a></li> -->
                 <li ng-class="{active: $state.includes('theaterlist')}"><a ui-sref="theaterlist">Rạp chiếu phim</a></li>
                 <li><a ng-click="logout1()">Đăng xuất</a></li>
             </ul>
@@ -21,15 +21,15 @@
         <div class="container row condition">
             <div class="row col-xs-6 col-sm-3">
                 <h5>Chọn rạp:</h5>
-                <select class="option" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
+                <select style="width: 150px !important;" class="option" ng-options="item.name for item in theaters" ng-model="theater" ng-click="#">
                     <option disabled selected value>
                         <h1>Chọn rạp</h1>
                     </option>
                 </select>
             </div>
-            <div  id="filmpicker" class="col-xs-6 col-sm-3">
+            <div id="filmpicker" class="col-xs-6 col-sm-3">
                 <h5>Chọn phim:</h5>
-                <select style="color: #000 !important; width: 150px !important;" ng-options="item.name for item in list1" ng-model="film" ng-click="filmlistinit()">
+                <select style="width: 150px !important; " class="option" ng-options="item.name for item in list1" ng-model="film" ng-click="filmlistinit()">
                     <option disabled selected value>
                         <h1>Chọn phim</h1>
                     </option>
@@ -37,22 +37,22 @@
             </div>
             <div class="col-xs-6 col-sm-3">
                 <h5>Chọn ngày:</h5>
-                <select ng-options="item in dates" ng-model="date" ng-click="#">
+                <select class="option" ng-options="item for item in dates" ng-model="date" ng-click="datelist()">
                     <option disabled selected value>
                         <h1>Chọn ngày</h1>
                     </option>
                 </select>
             </div>
-            <div class="col-xs-6 col-sm-3">
+            <!-- <div class="col-xs-6 col-sm-3">
                 <h5>Version:</h5>
-                <select ng-options="item in version" ng-model="version" ng-click="#">
+                <select style="color: #000 !important;" ng-options="item.version_name for item in version" ng-model="version" ng-click="versioninit()">
                     <option disabled selected value>
                         <h1>Chọn version</h1>
                     </option>
                 </select>
-            </div>
+            </div> -->
             <div class="col-xs-6 col-sm-3 findbtn">
-                <a class="btn btn-default">Duyệt</a>
+                <a class="btn btn-default" ng-click="getshowinglist()">Duyệt</a>
             </div>
         </div>
         <div class="container showingtable">
@@ -60,29 +60,25 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Rạp</th>
-                        <th>Phim</th>
                         <th>Ngày chiếu</th>
+                        <th>Phim</th>
                         <th>Giờ chiếu</th>
-                        <th>Version</th>
-                        <th>Giá vé</th>
+                        <th>Phòng chiếu</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="x in showinglist">
-                        <td>{{x.theater}}</td>
-                        <td>{{x.film}}</td>
+                        <td>{{x.film_name}}</td>
                         <td>{{x.date}}</td>
-                        <td>{{x.start_time}}</td>
-                        <td>{{x.version}}</td>
-                        <td>{{x.price}}</td>
+                        <td>{{x.time}}</td>
+                        <td>{{x.room_name}}</td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                     <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a data-toggle="modal" data-target="#editshowingModal" ng-click="edit1(x.code)">Edit</a></li>
+                                    <li><a data-toggle="modal" data-target="#editshowingModal" ng-click="edit(x.code)">Edit</a></li>
                                     <li><a ng-click="delete(x.code)">Delete</a></li>
                                 </ul>
                             </div>
@@ -102,6 +98,126 @@
                 </tbody>
             </table>
         </div>
+    </snap-content>
 </div>
-</snap-content>
+<div style="color: #000 !important;" id="editshowingModal" ng-controller="editshowingctrler" class="modal fade " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content modal2">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sửa suất chiếu</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="format">
+                    <label for="efilm" class="col-xs-6">Phim: </label>
+                    <select id="efilm" class="col-xs-6 textbox" ng-model="film" ng-options="item.name for item in films">
+                        <option disabled selected value>
+                            <h1>Chọn phim</h1>
+                        </option>
+                    </select>
+                </div>
+                <div class="format">
+                    <label for="date_e" class="col-xs-6">Ngày khởi chiếu: </label>
+                    <input id="date_e" type="text" data-translate-mode="true" data-large-default="true" data-large-mode="true" data-format="d/m/Y" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="time_e" class="col-xs-6">Thời gian bắt đầu: </label>
+                    <input id="time_e" type="text" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="version" class="col-xs-6">Version: </label>
+                    <form class="radiobtn col-xs-6" action="">
+                        <input id="ver11" size="20" type="radio" name="gender" value="AAA"> 2D
+                        <input id="ver22" size="20" type="radio" name="gender" value="BBB"> 3D
+                        <input id="ver33" size="20" type="radio" name="gender" value="4DX"> 4DX
+                        <input id="ver44" size="20" type="radio" name="gender" value="CCC"> IMAX
+                    </form>
+                </div>
+                <div class="format">
+                    <label for="eroom" class="col-xs-6">Phòng chiếu: </label>
+                    <select id="eroom" class="col-xs-6 textbox" ng-model="room" ng-options="item.name for item in rooms">
+                        <option disabled selected value>
+                            <h1>Chọn phòng</h1>
+                        </option>
+                    </select>
+                </div>
+                <div class="format">
+                    <label for="etheaters" class="col-xs-6">Rạp chiếu: </label>
+                    <select id="etheaters" class="col-xs-6 textbox" ng-options="item.name for item in theaters" ng-model="etheater" ng-change="roomlistinit()" ng-click="#">
+                        <option disabled selected value>
+                            <h1>Chọn rạp chiếu</h1>
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveshowing()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="color: #000 !important;" ng-controller="addshowingcontroler" id="addshowingModal" class="modal fade " role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content modal2">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Thêm suất chiếu</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="format">
+                    <label for="film" class="col-xs-6">Phim: </label>
+                    <select id="film" class="col-xs-6 textbox" ng-model="film" ng-options="item.name for item in films" ng-click="#">
+                        <option disabled selected value>
+                            <h1>Chọn phim</h1>
+                        </option>
+                    </select>
+                </div>
+                <div class="format">
+                    <label for="date_a" class="col-xs-6">Ngày khởi chiếu: </label>
+                    <input id="date_a" type="text" data-translate-mode="true" data-large-default="true" data-large-mode="true" readonly="" data-format="d/m/Y" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="time_d" class="col-xs-6">Thời gian bắt đầu: </label>
+                    <input id="time_d" type="text" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="version" class="col-xs-6">Version: </label>
+                    <form class="radiobtn col-xs-6" action="">
+                        <input id="ver1" size="20" type="radio" name="gender" value="AAA"> 2D
+                        <input id="ver2" size="20" type="radio" name="gender" value="BBB"> 3D
+                        <input id="ver3" size="20" type="radio" name="gender" value="4DX"> 4DX
+                        <input id="ver4" size="20" type="radio" name="gender" value="CCC"> IMAX
+                    </form>
+                </div>
+                <div class="format">
+                    <label for="ticketprice" class="col-xs-6">Giá vé: </label>
+                    <input id="ticketprice" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="theaters" class="col-xs-6">Rạp chiếu: </label>
+                    <select id="theaters" class="col-xs-6 textbox" ng-options="item.name for item in theaters" ng-model="atheater" ng-change="updateRoomID()" ng-click="#">
+                        <option disabled selected value>
+                            <h1>Chọn rạp chiếu</h1>
+                        </option>
+                    </select>
+                </div>
+                <div class="format">
+                    <label for="room" class="col-xs-6">Phòng chiếu: </label>
+                    <select id="room" class="col-xs-6 textbox" ng-model="room" ng-options="item.name for item in rooms">
+                        <option disabled selected value>
+                            <h1>Chọn phòng</h1>
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="addshowing()">Add</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

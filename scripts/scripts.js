@@ -46,7 +46,7 @@ angular.module("yapp").run(function($rootScope, $state, $http, $window, Authenti
             var start = new Date().getTime();
             while (new Date().getTime() < start + delay);
         }
-        sleep(300);
+        sleep(400);
 
         if (nextRoute.access.requiredLogin && !AuthenticationService.isLogged) {
             event.preventDefault();
@@ -276,7 +276,9 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                     dataType: 'json',
                     success: function(data, status) {
                         var theaterlist = data.data;
-                        $rootScope.theaterlist = theaterlist;
+                        $scope.$apply(function() {
+                            $rootScope.theaterlist = theaterlist;
+                        });
                     },
                     error: function(data, status) {
                         console.log(data);
@@ -300,7 +302,7 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                     }
                 });
 
-                $state.go("home");
+                $state.go("filmlist");
             }).fail(function(status, data) {
                 console.log(status);
                 console.log(data);

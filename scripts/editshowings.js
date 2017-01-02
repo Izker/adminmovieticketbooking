@@ -1,12 +1,10 @@
 'use strict'
 
-app.controller('addshowingcontroler', function($scope, $rootScope, $state, $window, AuthenticationService) {
+app.controller('editshowingctrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
 
-    
-    $( "#time_d" ).timeDropper({init_animation:'dropDown', autoswitch: true, format: "HH:mm",
-                                backgroundColor: '#fff'});
+    $("#time_e").timeDropper({ init_animation: 'dropDown', autoswitch: true, format: "HH:mm", backgroundColor: '#fff' });
 
-    $("#date_a").dateDropper();
+    $("#date_e").dateDropper();
 
     $scope.logout1 = function() {
         if (AuthenticationService.isLogged) {
@@ -17,12 +15,10 @@ app.controller('addshowingcontroler', function($scope, $rootScope, $state, $wind
     };
 
     $scope.theaters = $rootScope.theaterlist;
-    
+    $scope.rooms = $rootScope.rooms;
 
     $scope.roomlistinit = function() {
-        var tcode = $scope.atheater.code;
-        //disable chọn room
-        $('#room').prop('disabled', 'disabled');
+        var tcode = $scope.etheater.code;
         $.ajax({
             url: _url_host + '/v1/admin/rooms?theater-code=' + tcode,
             type: 'GET',
@@ -35,10 +31,8 @@ app.controller('addshowingcontroler', function($scope, $rootScope, $state, $wind
                 $scope.$apply(function() {
                     $scope.rooms = data.data;
                 });
-                $('#room').prop('disabled', false);
             },
             error: function(status) {
-                $('#room').prop('disabled', false);
                 alert(status);
             }
         });
@@ -46,44 +40,42 @@ app.controller('addshowingcontroler', function($scope, $rootScope, $state, $wind
 
     $scope.films = $rootScope.filmlist1;
 
-    $scope.updateRoomID = function() {
-        $scope.roomlistinit();
-    }
-
-    $scope.addshowing = function() {
-        var date = document.getElementById("date_a").value;
-        var st = document.getElementById("time_d").value;
+    $scope.saveshowing = function(code) {
+        var date = document.getElementById("date_e").value;
+        var st = document.getElementById("time_e").value;
         var price = [];
 
-        if (document.getElementById("ver1").checked === true) {
-            var ver1 = [{ "version_code": document.getElementById("ver1").value, "price": document.getElementById("ticketprice").value }];
+        if (document.getElementById("ver11").checked === true) {
+            var ver1 = [{ "version_code": document.getElementById("ver11").value, "price": document.getElementById("ticketprice").value }];
             price = ver1;
         }
-        if (document.getElementById("ver2").checked === true) {
-            var ver2 = [{ "version_code": document.getElementById("ver2").value, "price": document.getElementById("ticketprice").value }];
+        if (document.getElementById("ver22").checked === true) {
+            var ver2 = [{ "version_code": document.getElementById("ver22").value, "price": document.getElementById("ticketprice").value }];
             price = ver2;
         }
-        if (document.getElementById("ver3").checked === true) {
-            var ver3 = [{ "version_code": document.getElementById("ver3").value, "price": document.getElementById("ticketprice").value }];
+        if (document.getElementById("ver33").checked === true) {
+            var ver3 = [{ "version_code": document.getElementById("ver33").value, "price": document.getElementById("ticketprice").value }];
             price = ver3;
         }
-        if (document.getElementById("ver4").checked === true) {
-            var ver4 = [{ "version_code": document.getElementById("ver4").value, "price": document.getElementById("ticketprice").value }];
+        if (document.getElementById("ver44").checked === true) {
+            var ver4 = [{ "version_code": document.getElementById("ver44").value, "price": document.getElementById("ticketprice").value }];
             price = ver4;
         }
 
         var filmcode = $scope.film.code;
-        var theatercode = $scope.atheater.code;
+        var theatercode = $scope.etheater.code;
         var roomcode = $scope.room.code;
+        var editshowingcode = $rootScope.editshowingcode;
         console.log(filmcode);
         console.log(theatercode);
         console.log(roomcode);
         console.log(date);
         console.log(price);
         console.log(st);
+        console.log(editshowingcode);
         $.ajax({
             url: _url_host + '/v1/admin/schedules',
-            type: 'PUT',
+            type: 'POST',
             dataType: 'json',
             headers: {
                 'Accept': 'application/json',
@@ -96,6 +88,7 @@ app.controller('addshowingcontroler', function($scope, $rootScope, $state, $wind
                 "room-code": roomcode,
                 "time": st,
                 "prices": price,
+                "code": editshowingcode,
             },
             success: function(data, textStatus) {
                 console.log(textStatus);
@@ -110,10 +103,4 @@ app.controller('addshowingcontroler', function($scope, $rootScope, $state, $wind
             }
         });
     };
-
-    var transformdate2 = function(d) {
-        var a = d.split("-");
-        var s = a[2] + "/" + a[1] + "/" + a[0];
-        return s;
-    }
 });
