@@ -302,7 +302,7 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                     }
                 });
 
-                $state.go("slide");
+                $state.go("filmlist");
             }).fail(function(status, data) {
                 console.log(status);
                 console.log(data);

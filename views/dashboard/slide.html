@@ -18,23 +18,21 @@
         <div class=fr>
             <h2>Thêm Slide</h2>
         </div>
-        <div class="format">
+        <div class="format3">
             <label for="slidetitle" class="col-xs-6 control-label">Title:</label>
             <input id="slidetitle" class="textbox col-xs-6 inputformat">
         </div>
-        <div class="format">
+        <div class="format3">
             <label for="slidedesc" class="col-xs-6 control-label">Thông tin chi tiết:</label>
             <textarea id="slidedesc" class="bigtextbox col-xs-6 inputformat"></textarea>
         </div>
-        <div class="format">
+        <div class="format3">
             <label for="slidephoto" class="col-xs-6 control-label">Photo:</label>
             <input id="slidephoto" style="border-radius: 25% !important;" type="file" class="col-xs-6 textbox2 inputformat" ng-click="uploadpicture()" multiple>
         </div>
-        <div class="format" style="margin-top: 100px !important; margin-left: 50px !important;" id="image-holder"></div>
-        <button type="button" class="btn btn-default" style="height: 60px !important; width: 60px !important; border-radius: 100% !important; margin-top: 200px; position: fixed !important; margin-left: 1200px !important;" ng-click="addslide()">
-            <svg style="width:30px;height:30px" viewBox="0 0 24 24">
-                <path fill="#000000" d="M4,9H9V4H15V9H20V15H15V20H9V15H4V9M11,13V18H13V13H18V11H13V6H11V11H6V13H11Z" />
-            </svg>
+        <div style="margin-top: 100px !important; margin-left: 110px !important;" id="image-holder"></div>
+        <button type="button" class="btn btn-default" style="height: 60px !important; width: 60px !important; border-radius: 100% !important; margin-top: 150px; margin-left: 1200px !important;" ng-click="addslide()">
+            <i class="material-icons md-48">add</i>
         </button>
     </snap-content>
 </div>
