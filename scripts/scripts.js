@@ -156,10 +156,10 @@ app.config(["$stateProvider", "$urlRouterProvider", function(r, t) {
             controller: "DashboardCtrl",
             access: { requiredLogin: true }
         })
-        .state("home", {
+        .state("slide", {
             url: "/overview",
             parent: "dashboard",
-            templateUrl: "views/dashboard/home.html",
+            templateUrl: "views/dashboard/slide.html",
             controller: "homectrler",
             access: { requiredLogin: true }
         })
@@ -302,7 +302,7 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                     }
                 });
 
-                $state.go("filmlist");
+                $state.go("slide");
             }).fail(function(status, data) {
                 console.log(status);
                 console.log(data);

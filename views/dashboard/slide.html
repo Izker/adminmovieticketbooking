@@ -1,0 +1,40 @@
+<div>
+    <snap-drawer class="bg-dark">
+        <div class=snap-menu>
+            <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
+            <ul class=snap-ul>
+                <li ng-class="{active: $state.includes('slide')}"><a ui-sref=slide>Thêm slide</a></li>
+                <li ng-class="{active: $state.includes('filmlist')}"><a ui-sref=filmlist>Danh sách phim</a></li>
+                <li ng-class="{active: $state.includes('showinglist')}"><a ui-sref=showinglist>Danh sách suất chiếu</a></li>
+                <!-- <li ng-class="{active: $state.includes('ticketpricelist')}"><a ui-sref=ticketpricelist>Danh sách giá vé</a></li> -->
+                <li ng-class="{active: $state.includes('theaterlist')}"><a ui-sref="theaterlist">Rạp chiếu phim</a></li>
+                <li><a ui-sref=login>Đăng xuất</a></li>
+            </ul>
+        </div>
+    </snap-drawer>
+    <snap-dragger></snap-dragger>
+    <snap-content snap-opt-tap-to-close=false class=bg-dark>
+        <a snap-toggle=left ng-click="menuOpen = !menuOpen"> <span class=menutoggle> <i ng-hide=menuOpen class="fa fa-bars fa-2x"></i> <i ng-show=menuOpen class="fa fa-times fa-2x"></i> </span> </a>
+        <div class=fr>
+            <h2>Thêm Slide</h2>
+        </div>
+        <div class="format">
+            <label for="slidetitle" class="col-xs-6 control-label">Title:</label>
+            <input id="slidetitle" class="textbox col-xs-6 inputformat">
+        </div>
+        <div class="format">
+            <label for="slidedesc" class="col-xs-6 control-label">Thông tin chi tiết:</label>
+            <textarea id="slidedesc" class="bigtextbox col-xs-6 inputformat"></textarea>
+        </div>
+        <div class="format">
+            <label for="slidephoto" class="col-xs-6 control-label">Photo:</label>
+            <input id="slidephoto" style="border-radius: 25% !important;" type="file" class="col-xs-6 textbox2 inputformat" ng-click="uploadpicture()" multiple>
+        </div>
+        <div class="format" style="margin-top: 100px !important; margin-left: 50px !important;" id="image-holder"></div>
+        <button type="button" class="btn btn-default" style="height: 60px !important; width: 60px !important; border-radius: 100% !important; margin-top: 200px; position: fixed !important; margin-left: 1200px !important;" ng-click="addslide()">
+            <svg style="width:30px;height:30px" viewBox="0 0 24 24">
+                <path fill="#000000" d="M4,9H9V4H15V9H20V15H15V20H9V15H4V9M11,13V18H13V13H18V11H13V6H11V11H6V13H11Z" />
+            </svg>
+        </button>
+    </snap-content>
+</div>
