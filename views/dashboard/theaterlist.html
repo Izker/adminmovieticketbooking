@@ -3,6 +3,7 @@
         <div class=snap-menu>
             <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
             <ul class=snap-ul>
+                <li ng-class="{active: $state.includes('slidelist')}"><a ui-sref=slidelist>Danh sách slide</a></li>
                 <li ng-class="{active: $state.includes('slide')}"><a ui-sref=slide>Thêm slide</a></li>
                 <li ng-class="{active: $state.includes('filmlist')}"><a ui-sref=filmlist>Danh sách phim</a></li>
                 <li ng-class="{active: $state.includes('showinglist')}"><a ui-sref=showinglist>Danh sách suất chiếu</a></li>

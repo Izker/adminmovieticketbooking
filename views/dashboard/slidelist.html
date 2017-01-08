@@ -1,0 +1,100 @@
+<div id="panel2">
+    <snap-drawer class="bg-dark">
+        <div class=snap-menu>
+            <div class="sidebar-header text-center"> <img src=images/flat-avatar.png class="sidebar-img img-circle"> </div>
+            <ul class=snap-ul>
+                <li ng-class="{active: $state.includes('slidelist')}"><a ui-sref=slidelist>Danh sách slide</a></li>
+                <li ng-class="{active: $state.includes('slide')}"><a ui-sref=slide>Thêm slide</a></li>
+                <li ng-class="{active: $state.includes('filmlist')}"><a ui-sref=filmlist>Danh sách phim</a></li>
+                <li ng-class="{active: $state.includes('showinglist')}"><a ui-sref=showinglist>Danh sách suất chiếu</a></li>
+                <li ng-class="{active: $state.includes('theaterlist')}"><a ui-sref="theaterlist">Rạp chiếu phim</a></li>
+                <li><a ng-click="logout1()">Đăng xuất</a></li>
+            </ul>
+        </div>
+    </snap-drawer>
+    <snap-dragger></snap-dragger>
+    <snap-content snap-opt-tap-to-close=false class=bg-dark>
+        <a snap-toggle=left ng-click="menuOpen = !menuOpen"> <span class=menutoggle> <i ng-hide=menuOpen class="fa fa-bars fa-2x"></i> <i ng-show=menuOpen class="fa fa-times fa-2x"></i> </span> </a>
+        <div class=fr>
+            <h2>Danh sách slider</h2>
+        </div>
+        <div>
+            <div class="container">
+                <h2>Slides</h2>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Thông tin chi tiết</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in sliders">
+                            <td>{{x.title}}</td>
+                            <td>{{x.description}}</td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li id="editbtn1" ng-class="{active: $state.includes('editfilm')}"><a data-toggle="modal" data-target="#editslideModal" ng-click="edit(x.code)">Edit</a></li>
+                                        <li><a ng-click="delete(x.code)">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <!-- <div>
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#addfilmModal">ADD</a>
+                                </div> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </snap-content>
+</div>
+<div style="color: #000 !important;" id="editslideModal" ng-controller="editslidectrler" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content modal2">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sửa thông tin slide</h4>
+            </div>
+            <div class="modal-body row">
+                <div class="format">
+                    <label for="title" class="col-xs-6">Title: </label>
+                    <input id="title" type="text" data-translate-mode="true" data-large-default="true" data-large-mode="true" data-format="d/m/Y" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="desc" class="col-xs-6">Thông tin chi tiết: </label>
+                    <input id="desc" type="text" class="textbox col-xs-6">
+                </div>
+                <div class="format">
+                    <label for="input" class="col-xs-6 control-label">Photo</label>
+                    <input id="input" type="file" class="col-xs-6 textbox2" ng-click="uploadposter()" multiple>
+                </div>
+                <div class="format">
+                    <label for="version" class="col-xs-6">Showing Now: </label>
+                    <form class="radiobtn col-xs-6">
+                        <input id="now" size="20" type="radio" name="gender" value="true"> True
+                        <input id="notnow" size="20" type="radio" name="gender" value="false"> False
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="saveslide()">Save</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

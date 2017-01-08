@@ -124,7 +124,7 @@ app.controller('theaterlistctrler', function($scope, $rootScope, $state, $window
                 alert(textStatus);
             }
         });
-        location.reload();
+    
     };
 
     $scope.uploadpicture = function() {

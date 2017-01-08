@@ -83,6 +83,26 @@ angular.module("yapp").run(function($rootScope, $state, $http, $window, Authenti
         });
 
         $.ajax({
+            url: _url_host + '/v1/admin/slider',
+            type: 'GET',
+            dataType: 'json',
+            headers: {
+                'Accept': 'application/json',
+                'x-access-token': $window.sessionStorage.token
+            },
+            success: function(data, textStatus) {
+                if (data.success != "false") {
+                   $rootScope.sliders = data.data;
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+                console.log(errorThrown);
+                alert(textStatus);
+            }
+        });
+
+        $.ajax({
             url: _url_host + '/v1/admin/languages',
             datatype: 'json',
             data: {
@@ -157,10 +177,17 @@ app.config(["$stateProvider", "$urlRouterProvider", function(r, t) {
             access: { requiredLogin: true }
         })
         .state("slide", {
-            url: "/overview",
+            url: "/slide",
             parent: "dashboard",
             templateUrl: "views/dashboard/slide.html",
-            controller: "homectrler",
+            controller: "addslidectrler",
+            access: { requiredLogin: true }
+        })
+        .state("slidelist", {
+            url: "/slidelist",
+            parent: "dashboard",
+            templateUrl: "views/dashboard/slidelist.html",
+            controller: "slidelistctrler",
             access: { requiredLogin: true }
         })
         .state("filmlist", {
@@ -246,6 +273,26 @@ app.controller('LoginCtrl', ['$rootScope', '$scope', '$http', '$window', '$state
                     },
                     error: function(data, status) {
                         console.log(data);
+                    }
+                });
+
+                $.ajax({
+                    url: _url_host + '/v1/admin/slider',
+                    type: 'GET',
+                    dataType: 'json',
+                    headers: {
+                        'Accept': 'application/json',
+                        'x-access-token': data.token
+                    },
+                    success: function(data, textStatus) {
+                        if (data.success != "false") {
+                            $rootScope.sliders = data.data;
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus);
+                        console.log(errorThrown);
+                        alert(textStatus);
                     }
                 });
 

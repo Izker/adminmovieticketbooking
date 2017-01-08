@@ -1,6 +1,6 @@
 'use strict'
 
-app.controller('homectrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
+app.controller('addslidectrler', function($scope, $rootScope, $state, $window, AuthenticationService) {
 
     $scope.uploadpicture = function() {
         // Initialize Firebase
