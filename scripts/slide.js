@@ -45,7 +45,9 @@ app.controller('addslidectrler', function($scope, $rootScope, $state, $window, A
         if (document.getElementById("slidetitle").value === null && document.getElementById("slidedesc").value === null && $scope.url === null) {
             alert("Nhập thông tin theo yêu cầu!!!");
         } else {
-
+            // console.log(document.getElementById("slidetitle").value);
+            // console.log($scope.url);
+            // console.log(document.getElementById("slidedesc").value);
             $.ajax({
                 url: _url_host + '/v1/admin/slider',
                 type: 'PUT',
